@@ -8,27 +8,35 @@ struct aluno{
     char curso[30];
     float nota1;
     float nota2;
- };
+};
+
+const char* passouMedia(float media) {
+    if (media >= 7.0) {
+        return "APROVADO";
+    } else {
+        return "REPROVADO";
+    }
+}
 
 int main(void) {
-  FILE *fp;
-  fp = fopen("DadosEntrada.csv", "r");
+    FILE *entrada, *saida;
+    entrada = fopen("DadosEntrada.csv", "r");
+    saida = fopen("DadosSaida.csv", "w");
 
-  if (fp != NULL) {
-    struct aluno x;
-    float valorDaMedia = 0.0;
-    int i = 0;
-    while (fscanf(fp, "%s,%s,%s,%f,%f", x.nome, x.telefone, x.curso, &x.nota1, &x.nota2) != EOF) {
-      float valorDaMedia = x.nota1 + x.nota2 / 2;
-      printf("%s,%s,%s,%f,%f", x.nome, x.telefone, x.curso, x.nota1, x.nota2);
+    if (entrada != NULL && saida != NULL) {
+        struct aluno x;
+        while (fscanf(entrada, "%s,%s,%s,%f,%f", x.nome, x.telefone, x.curso, &x.nota1, &x.nota2) != EOF) {
+            float valorDaMedia = (x.nota1 + x.nota2) / 2;
+            const char *situacao = passouMedia(valorDaMedia);
+            fprintf(saida, "%s,%.2f,%s\n", x.nome, valorDaMedia, situacao);
+        }
+        fclose(entrada);
+        fclose(saida);
+        printf("Arquivo 'DadosSaida.csv' foi criado\n");
+    } else {
+        printf("Erro ao abrir os arquivos.\n");
+        exit(1);
     }
 
-    printf("Valor total: R$ %.2f", valorDaMedia);
-
-  } else {
-    printf("Erro ao abrir o arquivo");
-    exit(1);
-  }
-
-  return 0;
+    return 0;
 }
