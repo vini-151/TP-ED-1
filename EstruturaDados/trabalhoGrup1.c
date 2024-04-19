@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_NAME_LENGTH 60
-#define MAX_PHONE_LENGTH 15
-#define MAX_COURSE_LENGTH 30
+#define NOME_TAM 60
+#define CELULAR_TAM 15
+#define CURSO_TAM 30
 
 struct aluno {
-    char nome[MAX_NAME_LENGTH];
-    char telefone[MAX_PHONE_LENGTH];
-    char curso[MAX_COURSE_LENGTH];
+    char nome[NOME_TAM];
+    char telefone[CELULAR_TAM];
+    char curso[CURSO_TAM];
     float nota1;
     float nota2;
 };
@@ -26,13 +26,18 @@ int main(void) {
         char line[256]; 
         while (fgets(line, sizeof(line), entrada)) {
             sscanf(line, "%59[^,],%14[^,],%29[^,],%f,%f", x.nome, x.telefone, x.curso, &x.nota1, &x.nota2);
-            float valorDaMedia = (x.nota1 + x.nota2) / 2;
-            if (valorDaMedia < 0 || valorDaMedia > 10) {
-                printf("Erro: média inválida para o aluno %s\n", x.nome);
-                continue; 
+            printf("%s", line);
+            if(strcmp(line, "Nome,Telefone,Curso,Nota1,Nota2\n") == 0){
+                fprintf(saida, "Nome,media,situacao\n");
+            }else{
+                float valorDaMedia = (x.nota1 + x.nota2) / 2;
+                if (valorDaMedia < 0 || valorDaMedia > 10) {
+                    printf("Erro: média inválida para o aluno %s\n", x.nome);
+                    continue; 
+                }
+                const char *situacao = passouMedia(valorDaMedia);
+                fprintf(saida, "%s,%.2f,%s\n", x.nome, valorDaMedia, situacao);
             }
-            const char *situacao = passouMedia(valorDaMedia);
-            fprintf(saida, "%s,%.2f,%s\n", x.nome, valorDaMedia, situacao);
         }
         fclose(entrada);
         fclose(saida);
