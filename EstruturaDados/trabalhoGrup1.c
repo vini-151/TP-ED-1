@@ -26,7 +26,6 @@ int main(void) {
         char line[256]; 
         while (fgets(line, sizeof(line), entrada)) {
             sscanf(line, "%59[^,],%14[^,],%29[^,],%f,%f", x.nome, x.telefone, x.curso, &x.nota1, &x.nota2);
-            printf("%s", line);
             if(strcmp(line, "Nome,Telefone,Curso,Nota1,Nota2\n") == 0){
                 fprintf(saida, "Nome,media,situacao\n");
             }else{
