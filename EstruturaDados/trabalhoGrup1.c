@@ -14,7 +14,7 @@ struct Aluno {
     float nota2;
 };
 
-const char* passouMedia(float media);
+const char* PassouMedia(float media);
 
 void ValidaMedia(struct Aluno *a, float media);
 
@@ -33,7 +33,7 @@ int main(void) {
             }else{
                 float valorDaMedia = (x.nota1 + x.nota2) / 2;
                 ValidaMedia(&x, valorDaMedia);
-                const char *situacao = passouMedia(valorDaMedia);
+                const char *situacao = PassouMedia(valorDaMedia);
                 fprintf(saida, "%s,%.2f,%s\n", x.nome, valorDaMedia, situacao);
             }
         }
@@ -55,6 +55,6 @@ void ValidaMedia(struct Aluno *a, float media){
 }
 
 
-const char* passouMedia(float media) {
+const char* PassouMedia(float media) {
     return (media >= 7.0) ? "APROVADO" : "REPROVADO";
 }
