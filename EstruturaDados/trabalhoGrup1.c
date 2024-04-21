@@ -21,7 +21,7 @@ void ValidaMedia(struct Aluno *a, float media);
 int main(void) {
     FILE *entrada, *saida;
     entrada = fopen("DadosEntrada.csv", "r");
-    saida = fopen("DadosSaida.csv", "w");
+    saida = fopen("SituacaoFinal.csv", "w");
 
     if (entrada != NULL && saida != NULL) {
         struct Aluno x;
@@ -39,7 +39,7 @@ int main(void) {
         }
         fclose(entrada);
         fclose(saida);
-        printf("Arquivo 'DadosSaida.csv' criado com sucesso.\n");
+        printf("Arquivo 'SituacaoFinal.csv' criado com sucesso.\n");
     } else {
         printf("Erro ao abrir os arquivos.\n");
         exit(1);
